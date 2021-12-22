@@ -168,7 +168,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                 }
             },
         };
-
+         Keyboard.dismiss();
         await pubnub.publish({ channel, message });
     };
 
@@ -236,6 +236,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                         value={input}
                         onChangeText={setInput}
                         onSubmitEditing={handleSubmit}
+                        blurOnSubmit={false}
                         returnKeyType="send"
                         enablesReturnKeyAutomatically={true}
                         placeholder="Type a message."
