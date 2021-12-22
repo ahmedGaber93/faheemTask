@@ -195,7 +195,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
             <KeyboardAvoidingView
                 style={styles.innerContainer}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
-                keyboardVerticalOffset={Platform.OS === "ios" ? 78 : 28}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 28}
             >
 
 
