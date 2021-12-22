@@ -168,7 +168,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                 }
             },
         };
-         Keyboard.dismiss();
+         //Keyboard.dismiss();
         await pubnub.publish({ channel, message });
     };
 
