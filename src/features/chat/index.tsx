@@ -227,6 +227,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                         contentContainerStyle={{flexGrow: 1}}
                         data={[...messages].reverse()}
                         renderItem={renderItem}
+                        keyboardShouldPersistTaps="always"
                         keyExtractor={item => item.timetoken.toString()}/>
 
 
