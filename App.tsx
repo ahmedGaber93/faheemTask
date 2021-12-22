@@ -8,6 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import messaging from '@react-native-firebase/messaging';
 import codePush from "react-native-code-push"
 import UpdateProgressScreen from "./src/components/update-progress/UpdateProgressScreen";
+import {I18nManager} from "react-native";
 
 
 
@@ -23,6 +24,8 @@ const Stack = createNativeStackNavigator();
 
 const channel = "privateChatChannel";
 
+I18nManager.forceRTL(false);
+I18nManager.allowRTL(false);
 
 
 export default function App() {

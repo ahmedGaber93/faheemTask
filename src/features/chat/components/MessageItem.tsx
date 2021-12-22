@@ -98,7 +98,7 @@ const MessageItem: React.FC<Props> = (
             {isMe &&
             <MaterialCommunityIcons
                 name={"check-all"}
-                color={isRead() ? "green" : "red"}
+                color={isRead() ? "#a2bcdf" : "#b1b38c"}
                 size={22} />}
 
 
