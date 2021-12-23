@@ -11,7 +11,6 @@ import {
     Keyboard, Image, FlatList
 } from "react-native";
 import { usePubNub } from "pubnub-react";
-import {number, string} from "prop-types";
 import MessageItem from "./components/MessageItem";
 import {MessageActionEvent, ObjectsEvent} from "pubnub";
 
@@ -58,8 +57,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                     actions: item.actions || {},
                 }))
                 setMessages(data);
-                console.log("data", JSON.stringify(response));
-                await updateLastRead(data[data.length - 1])
             }
         );
     };
@@ -69,18 +66,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
 
 
 
-    const updateLastRead = async (item: any) => {
-        console.log("user2.uuid", user2.uuid);
-        await pubnub.objects.setMemberships({
-            channels: [{
-                id: channel,
-                custom: {
-                    lastReadTimetoken: item.timetoken,
-                }
-            }]
-        });
-        await getLastRead();
-    };
+
 
 
     const getLastRead = async () => {
@@ -103,7 +89,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
 
             const listener = {
                 message: (envelope: any) => {
-                    console.log("envelope", JSON.stringify(envelope));
                     const msg = {
                         id: envelope.message.id,
                         author: envelope.publisher,
@@ -112,10 +97,8 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                         actions: {},
                     }
                     setMessages((msgs: any[]) => [...msgs, msg]);
-                    updateLastRead(msg);
                 },
                 messageAction : (ma: MessageActionEvent) => {
-                    console.log("objectsEvent", ma);
                     setMessages((messages: any) => messages.map((item: any) => {
                         if (ma.data.messageTimetoken === item.timetoken) {
                             return {
@@ -152,8 +135,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
 
     // This function handles sending messages.
     const handleSubmit = async () => {
-        // Clear the input field.
-        setInput("");
 
         // Create the message with random `id`.
         const message = {
@@ -168,6 +149,11 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                 }
             },
         };
+
+
+        // Clear the input field.
+        setInput("");
+
          //Keyboard.dismiss();
         await pubnub.publish({ channel, message });
     };
@@ -194,8 +180,7 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
         <SafeAreaView style={styles.outerContainer}>
             <KeyboardAvoidingView
                 style={styles.innerContainer}
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 28}
+                behavior={Platform.OS === "ios" ? "padding" : undefined}
             >
 
 
