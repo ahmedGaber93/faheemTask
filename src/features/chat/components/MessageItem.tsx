@@ -10,9 +10,10 @@ type Props = {
     content?: string,
     timetoken?: any,
     actions?: any,
-    lastReadTime?: number,
     isMe?: boolean,
 }
+
+
 const channel = "privateChatChannel";
 
 
@@ -22,28 +23,43 @@ const MessageItem: React.FC<Props> = (
         author,
         content,
         timetoken,
-        lastReadTime = 0,
         isMe = false,
         actions = {},
     }
 ) => {
+
+
+
     const pubnub = usePubNub();
 
 
+
     const getDate = () => {
+
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+
         let diff = Date.now() - Math.floor(timetoken/10000);
 
-        if ((diff / 1000) < 60){
+        if ((diff / second) < 60){
             return "just now";
-        } else if ((diff / 60000 < 60)){
-            return Math.floor(diff / 60000) + " m";
-        } else if ((diff / 360000 < 24)){
-            return Math.floor(diff / 360000) + " h";
+        } else if ((diff / minute) < 60){
+            return Math.floor(diff / minute) + " m";
+        } else if ((diff / hour < 24)){
+            return Math.floor(diff / hour) + " h";
         } else {
-            return Math.floor(diff / (360000 * 24)) + " d";
+            return Math.floor(diff / day) + " d";
         }
 
     };
+
+
+
+
+
 
 
     const readMessage = async () => {
@@ -57,11 +73,14 @@ const MessageItem: React.FC<Props> = (
                 },
             },
             function(status, response) {
-                console.log("reeeestatus", status);
-                console.log("reeee", response);
+
             }
         );
     };
+
+
+
+
 
 
     React.useEffect(() => {
@@ -75,9 +94,16 @@ const MessageItem: React.FC<Props> = (
     }, [pubnub]);
 
 
+
+
+
     const isRead = () => {
         return actions?.receipt?.read !== undefined;
     };
+
+
+
+
 
     return (
         <View style={[
@@ -104,6 +130,7 @@ const MessageItem: React.FC<Props> = (
 
         </View>
     );
+
 };
 
 

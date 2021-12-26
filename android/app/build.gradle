@@ -82,6 +82,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -134,8 +135,8 @@ android {
         applicationId "com.faheemtask"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     	multiDexEnabled  true
 	}
     splits {
@@ -171,14 +172,14 @@ android {
                 ndk {
                     abiFilters nativeArchitectures.split(',')
                 }
+            }
+        }
         releaseStaging {
             resValue "string", "CodePushDeploymentKey", '"RMDdvo0oVW6x6YtKOKw3saKrUQ03Rb_knPt5r"'
 
             // Note: It is a good idea to provide matchingFallbacks for the new buildType you create to prevent build issues
             // Add the following line if not already there
             matchingFallbacks = ['release']
-        }
-            }
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

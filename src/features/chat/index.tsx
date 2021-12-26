@@ -8,11 +8,11 @@ import {
     TextInput,
     KeyboardAvoidingView,
     Platform,
-    Keyboard, Image, FlatList
+    Image, FlatList
 } from "react-native";
 import { usePubNub } from "pubnub-react";
 import MessageItem from "./components/MessageItem";
-import {MessageActionEvent, ObjectsEvent} from "pubnub";
+import {MessageActionEvent} from "pubnub";
 
 
 const channel = "privateChatChannel";
@@ -34,7 +34,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
 
     const [input, setInput] = useState<string>("");
     const [messages, setMessages] = useState<any>([]);
-    const [lastRead, setLastRead] = React.useState<number>();
 
 
 
@@ -69,18 +68,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
 
 
 
-    const getLastRead = async () => {
-        const {data: [{custom}]} = await pubnub.objects.getMemberships({
-            uuid: user2.uuid,
-            include: {
-                customFields: true
-            }
-        });
-
-
-        setLastRead(custom?.lastReadTimetoken as number);
-
-    };
 
 
     useEffect(() => {
@@ -119,7 +106,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
             pubnub.subscribe({ channels: [channel] });
 
             (async () => {
-                await getLastRead();
                 await getHistory();
             })()
 
@@ -133,7 +119,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
 
 
 
-    // This function handles sending messages.
     const handleSubmit = async () => {
 
         // Create the message with random `id`.
@@ -151,10 +136,8 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
         };
 
 
-        // Clear the input field.
         setInput("");
 
-         //Keyboard.dismiss();
         await pubnub.publish({ channel, message });
     };
 
@@ -167,7 +150,6 @@ const ChatScreen : React.FC<Props> = ({ route }) => {
                 isMe={item.author === user.uuid}
                 timetoken={item.timetoken}
                 actions={item.actions}
-                lastReadTime={lastRead}
                 id={item.id} />
         )
     };

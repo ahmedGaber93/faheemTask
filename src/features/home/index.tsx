@@ -1,7 +1,6 @@
 import React from "react";
 import {StyleSheet, Text, SafeAreaView, StatusBar, View} from 'react-native';
 import UserComponent from './components/UserComponent';
-import {any} from 'prop-types';
 
 
 
@@ -32,7 +31,7 @@ const HomeScreen : React.FC<Props> = (
 ) => {
 
 
-    const onUserItemPress = (user: any, user2: any) => {
+    const openChat = (user: any, user2: any) => {
         navigation.navigate("chatScreen", {
             user,
             user2
@@ -46,13 +45,13 @@ const HomeScreen : React.FC<Props> = (
 
 
             <UserComponent
-                onPress={() => onUserItemPress(users[0], users[1])}
+                onPress={() => openChat(users[0], users[1])}
                 user={users[0]}/>
 
             <View style={{height: 80}}/>
 
             <UserComponent
-                onPress={() => onUserItemPress(users[1], users[0])}
+                onPress={() => openChat(users[1], users[0])}
                 user={users[1]}/>
 
 
