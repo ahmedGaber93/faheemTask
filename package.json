@@ -7,10 +7,7 @@
     "ios": "react-native run-ios",
     "start": "npx react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "OTA:android:Staging": "appcenter codepush release-react -a a-gaber/faheemtask-android -d Staging -m",
-    "OTA:android:Production": "appcenter codepush release-react -a a-gaber/faheemtask-android -d Production -m",
-    "OTA:ios:Production": "appcenter codepush release-react -a a-gaber/faheemtask-ios -d Production -m"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@react-native-firebase/app": "^14.1.0",
@@ -24,8 +21,6 @@
     "pubnub-react": "^2.1.1",
     "react": "17.0.2",
     "react-native": "0.66.4",
-    "react-native-code-push": "^7.0.4",
-    "react-native-emoji-selector": "^0.2.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.10.1",
     "react-native-vector-icons": "^9.0.0"
